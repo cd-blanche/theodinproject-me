@@ -1,0 +1,1 @@
+This is a preparatory landing page based on The Odin Project's landing page assignment.

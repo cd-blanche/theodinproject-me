@@ -1,0 +1,24 @@
+body {
+    font-family: Georgia, serif;
+    text-align: center;
+}
+
+.homepage-recipe-img {
+    width: 150px;
+    height: auto;
+}
+
+.recipe-img {
+    width: 500px;
+    height: auto;
+}
+
+.description {
+    font-style: italic;
+    font-size: 18px;
+    background-color: yellowgreen;
+}
+
+.left-align {
+    text-align: left;
+}
