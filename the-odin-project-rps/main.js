@@ -30,6 +30,24 @@ PSEUDOCODE for TheOdinProject RPS Game
 let userWins = 0;
 let computerWins = 0;
 
+document.addEventListener('click', e => {
+
+    const computerChoice = getComputerSelection();
+
+    switch (e.target.id) {
+        case 'rock':
+            console.log(playRound(computerChoice, 'rock'));
+            break;
+        case 'paper':
+            console.log(playRound(computerChoice, 'paper'));
+            break;
+        case 'scissors':
+            console.log(playRound(computerChoice, 'scissors'));
+            break;
+    };
+
+});
+
 function getComputerSelection() {
     const generateChoice = Math.floor(Math.random() * 3 + 1);
     let computerSelection;
@@ -124,17 +142,14 @@ function game() {
     let result;
 
     // Loops for best out of 5 rounds.
-    for (let i = 0; i < 999; i++) {
-        // Breaks the loop once someone reaches 3 points.
-        if (userWins == 3) { 
-            break; 
-        } else if (computerWins == 3) {
-            break;
-        } 
-        // Gets player input
-        playerSelection = prompt("Rock, paper, or scissors?");
-        // Accounts for case sensitivity
-        playerSelection = playerSelection.toLowerCase();
+    for (let i = 0; i < Infinity; i++) {
+        // // Breaks the loop once someone reaches 3 points.
+        // if (userWins == 3) { 
+        //     break; 
+        // } else if (computerWins == 3) {
+        //     break;
+        // } 
+
         // Gets computer selection
         computerSelection = getComputerSelection();
         // Plays round and stores result | Validates correct user input
@@ -155,5 +170,3 @@ function game() {
     }
 
 }
-
-game();
