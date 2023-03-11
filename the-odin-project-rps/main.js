@@ -1,52 +1,96 @@
-/*
-PSEUDOCODE for TheOdinProject RPS Game
+// Global Variables
+userPoints = 0;
+computerPoints = 0;
 
-1. Interface
-2. Input
-3. Output
-4. How to get Output from Input
+document.addEventListener('click', selectButton);
 
-1. 
-> console.log()
-
-2.
-> Initialize win counter.  
-> Ask user to select from either rock, paper, or scissor.
-> Store user input in a variable.
-> Have computer select a random option from rock, paper, or scissor.
-> Store computer input in a variable.
-
-3.
-> Compare user input and computer input.
-> Use conditional statements to test user input against computer input.
-> Update win counter by 1 depending on outcome.
-> Display round outcome to user.
-> Repeat process until one player reaches a certain number of victories.
-> Display overall game outcome to user.
-> Display reset button.
-> Reset button resets win counter to 0.
-*/
-
-let userWins = 0;
-let computerWins = 0;
-
-document.addEventListener('click', e => {
-
+// Registers button
+function selectButton(e) {
     const computerChoice = getComputerSelection();
+    const roundWinner = document.querySelector('#round-winner');
 
     switch (e.target.id) {
         case 'rock':
-            console.log(playRound(computerChoice, 'rock'));
+            roundWinner.textContent = playRound(computerChoice, 'rock');
             break;
         case 'paper':
-            console.log(playRound(computerChoice, 'paper'));
+            roundWinner.textContent = playRound(computerChoice, 'paper');
             break;
         case 'scissors':
-            console.log(playRound(computerChoice, 'scissors'));
+            roundWinner.textContent = playRound(computerChoice, 'scissors');
             break;
     };
+};
 
-});
+// Plays a round
+function playRound(computerSelection, playerSelection) {
+
+    if (playerSelection == computerSelection) {
+        return "It's a tie.";
+    
+    } else if (playerSelection == "rock") {
+        switch (computerSelection) {
+            case "paper":
+                updateScore(false);
+                return "You lose! Paper beats rock.";
+            case "scissors":
+                updateScore(true);
+                return "You win! Rock beats scissors.";
+            default:
+                return "Something went wrong.";
+        };
+    
+    } else if (playerSelection == "paper") {
+        switch(computerSelection) {
+            case "rock":
+                updateScore(true);
+                return "You win! Paper beats rock.";
+            case "scissors":
+                updateScore(false);
+                return "You lose! Scissors beats paper.";
+            default:
+                return "Something went wrong.";
+        };
+    
+    } else if (playerSelection == "scissors") {
+        switch(computerSelection) {
+            case "paper":
+                updateScore(true);
+                return "You win! Scissors beats paper.";
+            case "rock":
+                updateScore(false);
+                return "You lose! Rock beats scissors.";
+            default:
+                return "Something went wrong.";
+        };
+    };
+};
+
+function updateScore(winStatus) {
+    const userScore = document.querySelector('#user-score');
+    const computerScore = document.querySelector('#computer-score');
+
+    if (winStatus) {
+        userPoints += 1;
+        userScore.textContent = userPoints;
+    } else {
+        computerPoints += 1;
+        computerScore.textContent = computerPoints;
+    };
+
+    if (userPoints === 5) {
+        endGame('User');
+    } else if (computerPoints === 5) {
+        endGame('Computer');
+    };
+
+};
+
+function endGame(winner) {
+    const winnerResult = document.querySelector('#winner');
+    winnerResult.textContent = winner;
+    document.removeEventListener('click', selectButton);
+};
 
 function getComputerSelection() {
     const generateChoice = Math.floor(Math.random() * 3 + 1);
@@ -64,109 +108,6 @@ function getComputerSelection() {
             break;
         default:
             computerSelection = "an error has ocurred"
-    }
+    };
     return computerSelection;
-}
-
-// Plays a round
-function playRound(computerSelection, playerSelection) {
-
-    let roundResult;
-
-    if (playerSelection == computerSelection) {
-        return roundResult = "It's a tie.";
-    
-    } else if (playerSelection == "rock") {
-        // console.log("rock works");
-        switch (computerSelection) {
-            case "paper":
-                computerWins++;
-                return roundResult = "You lose! Paper beats rock.";
-                break;
-            case "scissors":
-                userWins++;
-                return roundResult = "You win! Rock beats scissors.";
-                break;
-            default:
-                return roundResult = "Something went wrong.";
-        }
-    
-    } else if (playerSelection == "paper") {
-        // console.log("paper works");
-        switch(computerSelection) {
-            case "rock":
-                userWins++;
-                return roundResult = "You win! Paper beats rock.";
-                break;
-            case "scissors":
-                computerWins++;
-                return roundResult = "You lose! Scissors beats paper.";
-                break;
-            default:
-                return roundResult = "Something went wrong.";
-        }
-    
-    } else if (playerSelection == "scissors") {
-        // console.log("scissors work");
-        switch(computerSelection) {
-            case "paper":
-                userWins++;
-                return roundResult = "You win! Scissors beats paper.";
-                break;
-            case "rock":
-                computerWins++;
-                return roundResult = "You lose! Rock beats scissors.";
-                break;
-            default:
-                return roundResult = "Something went wrong.";
-        }
-    }
-}
-
-// Loops game till best of 5
-// Pseudocode:
-// > Game function called
-// > Set userWins and computerWins back to 0
-// > Call playRound() 5 times
-// > Increase wins for each round
-// >> If user wins, increase userWins counter by 1
-// >> If computer wins, increase computerWins counter by 1
-// > Once someone has reached 3 wins, end game.
-// > Display victory/loss flag.
-function game() {
-    alert("Best out of 5. Game start!")
-    userWins = 0;
-    computerWins = 0;
-    let playerSelection;
-    let computerSelection;
-    let result;
-
-    // Loops for best out of 5 rounds.
-    for (let i = 0; i < Infinity; i++) {
-        // // Breaks the loop once someone reaches 3 points.
-        // if (userWins == 3) { 
-        //     break; 
-        // } else if (computerWins == 3) {
-        //     break;
-        // } 
-
-        // Gets computer selection
-        computerSelection = getComputerSelection();
-        // Plays round and stores result | Validates correct user input
-        if (playerSelection != "rock" && playerSelection != "paper" && playerSelection != "scissors" ) {
-            alert("Please enter a valid weapon: rock, paper, or scissors.")
-            continue;
-        }
-        result = playRound(playerSelection, computerSelection);
-        alert(result + "\nScore: " + userWins + " | " + computerWins);
-    }
-
-    if (userWins > computerWins) {
-        alert("Game over. You win!");
-    } else if (computerWins > userWins) {
-        alert("Game over. You lose!");
-     } else {
-        alert("Game over. It's a tie!");
-    }
-
-}
+};
