@@ -6,3 +6,16 @@ for (let i = 0; i < (16 * 16); i++) {
 
   container.appendChild(newSquare);
 };
+
+let addTrail = (e) => {
+  e.target.classList.add('square-trail');
+};
+
+document.querySelectorAll('.square').forEach(square => {
+
+  square.addEventListener('mouseenter', addTrail);
+
+});
+
+
+
