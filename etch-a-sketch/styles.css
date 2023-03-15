@@ -7,17 +7,26 @@ body {
   width: 100vw;
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+#change,
+#reset {
+  padding: 10px;
+  margin: 20px auto;
+}
 #container {
   display: grid;
-  grid-template-columns: repeat(16, 50px);
-  grid-template-rows: repeat(16, 50px);
+  width: 1000px;
+  height: 1000px;
+  grid-template-columns: repeat(var(--grid-size, 16), 1fr);
+  grid-template-rows: repeat(var(--grid-size, 16), 1fr);
 }
 .square {
-  border: 1px solid black;
+  border: 1px solid rgb(120, 120, 120);
 }
 .square-trail {
   background-color: greenyellow;
 }
+
