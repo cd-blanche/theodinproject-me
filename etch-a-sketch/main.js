@@ -45,8 +45,10 @@ function addTrail() {
   squares.forEach(square => {
     square.onmousedown = (e) => {
       e.target.classList.add('square-trail');
-      onmousemove = (event) => {
-        event.target.classList.add('square-trail');
+        onmousemove = (event) => {
+        if (event.target.parentElement.id === 'container') {
+          event.target.classList.add('square-trail');
+        }
       };
       onmouseup = () => {
         onmousemove = null;
