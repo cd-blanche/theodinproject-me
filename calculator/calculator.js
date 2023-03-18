@@ -1,22 +1,22 @@
-function minus(a, b) {
+function plus(a, b) {
   return a + b;
-}
+};
 function minus(a, b) {
-  return a -b;
-}
+  return a - b;
+};
 function multiply(a, b) {
   return a * b;
-}
+};
 function divide(a, b) {
   return a / b;
-}
+};
 function operate(operator, a, b) {
-
-  const result = operator(a, b);
+  
   const display = document.querySelector('#display');
 
+  const result = window[operator](a, b);
   display.textContent = result;
-}
+};
 function process() {
 
   const display = document.querySelector('#display');
@@ -29,19 +29,21 @@ function process() {
   function checkInput(event) {
     const pressed = event.target.textContent;
     if (event.target.parentNode.id === 'numpad') {
-      display.textContent += pressed;
-      console.log(display.textContent)      
+      display.textContent = (display.textContent === '0')
+                            ? pressed
+                            : display.textContent + pressed;
 
     } else if (event.target.dataset.operator === 'equals') {
-      console.log(first);
-      console.log(second);
-      console.log(operation);
+      second = parseInt(display.textContent);
       operate(operation, first, second);
       
     } else if (event.target.parentNode.id === 'operators') {
       first = parseInt(display.textContent);
-      console.log(first);
+      operation = event.target.dataset.operator;
+      display.textContent = '0';
 
+    } else if (event.target.textContent === 'C') {
+      display.textContent = '0'
     }
 
   };
@@ -49,6 +51,8 @@ function process() {
 
 
 };
+
+
 
 
 
