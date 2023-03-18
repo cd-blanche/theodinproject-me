@@ -66,13 +66,8 @@ button:active {
   display: flex;
 
 }
-.operators {
+#operators {
   grid-area: operator;
   display: flex;
   flex-direction: column;
-
-}
-
-.operators > button {
-  height: 100px;
 }
