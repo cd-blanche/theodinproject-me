@@ -27,7 +27,7 @@ body {
   "numpad numpad numpad operator";
   gap: 5px;
 }
-.display {
+#display {
   height: 100px;
   grid-area: display;
   display: flex;
@@ -38,7 +38,7 @@ body {
 .clear {
   grid-area: clear;
 }
-.numpad {
+#numpad {
   grid-area: numpad;
   display: grid;
   grid-template-columns: repeat(3, 100px);
@@ -50,7 +50,14 @@ button {
   border-radius: 50%;
   border: none;
 }
-.numpad > button:nth-last-of-type(2) {
+button:hover {
+  background-color: hsl(16, 100%, 50%, 0.1);
+}
+button:active {
+  background-color: orangered;
+  color: white;
+}
+#numpad > button:nth-last-of-type(2) {
   grid-column: 1/3;
   width: 200px;
   border-radius: 50px;
