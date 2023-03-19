@@ -13,8 +13,7 @@ function divide(a, b) {
 function operate(operator, a, b) {
   
   const display = document.querySelector('#display');
-
-  const result = window[operator](a, b);
+  const result = window[operator || 'plus'](a, b);
   display.textContent = result;
 };
 function process() {
@@ -25,15 +24,26 @@ function process() {
   let operation = '';
 
   document.addEventListener('click', checkInput);
+  document.addEventListener('keydown', checkInput);
 
   function checkInput(event) {
     const pressed = event.target.textContent;
-    if (event.target.parentNode.id === 'numpad') {
+    const key = parseInt(event.key);
+
+    console.log(key)
+    console.log(typeof(key))
+
+    if (key >= 0) {
+      display.textContent = (display.textContent === '0')
+                            ? key
+                            : display.textContent + key;
+
+    } else if (event.target.parentNode.id === 'numpad') {
       display.textContent = (display.textContent === '0')
                             ? pressed
                             : display.textContent + pressed;
 
-    } else if (event.target.dataset.operator === 'equals') {
+    } else if (event.target.dataset.operator === 'equals' || key === '=') {
       second = parseInt(display.textContent);
       operate(operation, first, second);
       
@@ -42,7 +52,7 @@ function process() {
       operation = event.target.dataset.operator;
       display.textContent = '0';
 
-    } else if (event.target.textContent === 'C') {
+    } else if (event.target.textContent === 'C' || key === 'Backspace' || key === 'Escape') {
       display.textContent = '0'
     }
 
