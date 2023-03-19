@@ -23,27 +23,19 @@ function process() {
   let second = 0;
   let operation = '';
 
-  document.addEventListener('click', checkInput);
-  document.addEventListener('keydown', checkInput);
+  document.addEventListener('click', checkClickInput);
+  document.addEventListener('keydown', checkKeyInput);
 
-  function checkInput(event) {
+  function checkClickInput(event) {
     const pressed = event.target.textContent;
-    const key = parseInt(event.key);
 
-    console.log(key)
-    console.log(typeof(key))
 
-    if (key >= 0) {
-      display.textContent = (display.textContent === '0')
-                            ? key
-                            : display.textContent + key;
-
-    } else if (event.target.parentNode.id === 'numpad') {
+    if (event.target.parentNode.id === 'numpad') {
       display.textContent = (display.textContent === '0')
                             ? pressed
                             : display.textContent + pressed;
 
-    } else if (event.target.dataset.operator === 'equals' || key === '=') {
+    } else if (event.target.dataset.operator === 'equals') {
       second = parseInt(display.textContent);
       operate(operation, first, second);
       
@@ -52,10 +44,33 @@ function process() {
       operation = event.target.dataset.operator;
       display.textContent = '0';
 
-    } else if (event.target.textContent === 'C' || key === 'Backspace' || key === 'Escape') {
+    } else if (event.target.textContent === 'C') {
       display.textContent = '0'
+      first = 0;
+      second = 0;
+      operation = '';
     }
 
+  };
+
+  function checkKeyInput(event) {
+    const keyDigit = parseInt(event.key);
+    const key = event.key;
+    
+
+    if (keyDigit >= 0) {
+      display.textContent = (display.textContent === '0')
+                            ? key
+                            : display.textContent + key;
+    } else if (key === '=' || key === 'Enter') {
+      second = parseInt(display.textContent);
+      operate(operation, first, second);
+    } else if (key === 'Escape') {
+      display.textContent = '0'
+      first = 0;
+      second = 0;
+      operation = '';
+    }
   };
 
 
@@ -68,23 +83,3 @@ function process() {
 
 
 process();
-
-// pseudo code
-/*
-
-when a button is pressed,
-check its content
-if its a number, update the display with its value
-
-when an operator is clicked,
-get the data-operator attribute of the clicked button,
-and store it inside a variable 
-store the initial value inside a variable
-
-when the equals operator is clicked,
-store the second value inside another variable
-then take the operator variable, the first value, and the second value.
-and pass them through the operate() function
-
-
-*/
