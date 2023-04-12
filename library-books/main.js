@@ -12,6 +12,11 @@ Book.prototype.updateReadStatus = function () {
   this.read = (this.read) ? false : true;
 } 
 
+function toggleReadStatus(index) {
+  library[index].updateReadStatus();
+  printBookToLibrary();
+}
+
 let library = [];
 const form = document.querySelector('form');
 const table = document.querySelector('tbody');
@@ -38,6 +43,7 @@ function printBookToLibrary() {
         <td>${book.pages}</td>
         <td>${book.read ? 'Read' : 'Not read'}</td>
         <td><button onclick="removeBook('${index}')">X</button></td>
+        <td><button onclick="toggleReadStatus(${index})">Update</button></td>
       </tr>
     `
   });
